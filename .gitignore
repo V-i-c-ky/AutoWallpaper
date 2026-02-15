@@ -1,0 +1,82 @@
+# ============================
+# Rust / Cargo
+# ============================
+/target/
+/debug/
+/release/
+
+# Cargo package lock file
+# 对于 binary 项目建议提交 Cargo.lock；library 项目可忽略
+Cargo.lock
+
+# Rustfmt backup files
+**/*.rs.bk
+
+# Clippy logs
+.clippy-driver.log
+
+# ============================
+# IDE / Editor
+# ============================
+
+# VSCode
+.vscode/
+*.code-workspace
+
+# IntelliJ / CLion / RustRover
+.idea/
+*.iml
+out/
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+
+# Emacs
+*~
+\#*\#
+.\#*
+
+# ============================
+# OS / System files
+# ============================
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux temp files
+*~
+
+# ============================
+# Logs / Temp
+# ============================
+*.log
+logs/
+tmp/
+temp/
+
+# ============================
+# Binary / Build Artifacts
+# ============================
+*.exe
+*.dll
+*.so
+*.dylib
+*.bin
+*.obj
+*.o
+
+# ============================
+# Misc
+# ============================
+*.bak
+*.old
