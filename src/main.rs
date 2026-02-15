@@ -164,7 +164,17 @@ fn run_post_execution_apps(apps: &[String], logger: &mut Logger) {
     for app in apps {
         let expanded = expand_env(app);
         logger.log(&format!("Trying to execute {expanded}"));
-        match Command::new(&expanded).spawn().and_then(|mut c| c.wait()) {
+        let mut command = if cfg!(target_os = "windows") {
+            let mut c = Command::new("cmd");
+            c.arg("/C").arg(&expanded);
+            c
+        } else {
+            let mut c = Command::new("sh");
+            c.arg("-c").arg(&expanded);
+            c
+        };
+
+        match command.spawn().and_then(|mut c| c.wait()) {
             Ok(s) => logger.log(&format!(
                 "Executed {expanded} with code {}",
                 s.code().unwrap_or(-1)

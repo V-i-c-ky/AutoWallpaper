@@ -128,7 +128,7 @@ fn parse_u8(v: &Value, min: u8, max: u8, default: u8) -> u8 {
 
 fn parse_u32_min(v: &Value, min: u32, default: u32) -> u32 {
     v.as_u64()
-        .map(|n| (n as u32).max(min))
+        .map(|n| (n.min(u32::MAX as u64) as u32).max(min))
         .or_else(|| {
             v.as_str()
                 .and_then(|s| s.parse::<u32>().ok())
@@ -165,7 +165,10 @@ fn parse_watermark(v: &Value, index: usize, logger: &mut Logger) -> Option<Water
                 .and_then(|v| v.as_array())
                 .and_then(|arr| {
                     if arr.len() == 4 {
-                        let v: Vec<u8> = arr.iter().filter_map(|c| c.as_u64().map(|n| n as u8)).collect();
+                        let v: Vec<u8> = arr
+                            .iter()
+                            .filter_map(|c| c.as_u64().map(|n| n.min(255) as u8))
+                            .collect();
                         if v.len() == 4 { Some([v[0], v[1], v[2], v[3]]) } else { None }
                     } else {
                         None

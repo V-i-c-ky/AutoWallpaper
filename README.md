@@ -52,6 +52,24 @@ cargo build
 cargo build --release
 ```
 
+### Windows 可执行文件图标与作者信息（本地构建）
+
+- 图标默认读取 `data/app.ico`（可用环境变量 `AW_ICON_PATH` 覆盖）
+- 作者/公司名从环境变量 `AW_EXE_AUTHOR` 读取
+- 其他可选元信息：`AW_EXE_PRODUCT_NAME`、`AW_EXE_DESCRIPTION`
+
+PowerShell 示例（仅当前终端会话生效，不会写入仓库）：
+
+```powershell
+$env:AW_ICON_PATH = "data\\app.ico"
+$env:AW_EXE_AUTHOR = "你的名字"
+$env:AW_EXE_PRODUCT_NAME = "Auto Wallpaper"
+$env:AW_EXE_DESCRIPTION = "Auto change Bing wallpaper"
+cargo build --release
+```
+
+说明：当前仓库已忽略 `data/` 目录，因此图标文件不会被提交到 Git。
+
 Release 配置：
 - `opt-level = "z"` — 优化体积
 - `lto = true` — 链接时优化
